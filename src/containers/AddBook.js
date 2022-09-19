@@ -1,28 +1,33 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
-const initialState = {
-  title: '',
-  author: ''
-}
+import { connect } from 'react-redux'
+import { addBook } from '../redux/actions/actionAddBook';
 
 
-const AddBook = () => {
+const AddBook = ({libraryData, addBook}) => {
 
-  const [data, setData] = useState(initialState)
+  console.log(libraryData)
 
-  const {title, author} = data
+  const initialState = {
+    title: '',
+    author: ''
+  }
+
+  const [newData, setNewData] = useState(initialState)
+
+  const {title, author} = newData
 
   const handleChange = e => {
 
-  setData({...data, [e.target.id]: e.target.value})
+  setNewData({...newData, [e.target.id]: e.target.value})
 
 }
 
 const handleSubmit = e => {
   e.preventDefault()
-  console.log(data)
+  addBook(newData)
+  setNewData(initialState)
 }
 
   return (
@@ -77,4 +82,17 @@ const handleSubmit = e => {
   )
 }
 
-export default AddBook
+const mapStateToProps = (state) => {
+
+  return {
+    libraryData:  state.library
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addBook: param => dispatch(addBook(param))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddBook)
