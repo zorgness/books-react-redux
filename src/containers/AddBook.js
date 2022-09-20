@@ -3,11 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { connect } from 'react-redux'
 import { addBook } from '../redux/actions/actionAddBook';
+import FlipMove from 'react-flip-move';
 
 
 const AddBook = ({libraryData, addBook}) => {
 
-  console.log(libraryData)
 
   const initialState = {
     title: '',
@@ -29,6 +29,26 @@ const handleSubmit = e => {
   addBook(newData)
   setNewData(initialState)
 }
+
+
+
+const displayData = libraryData.length > 0 ?
+
+<FlipMove>
+  {
+     libraryData.map(({id, title, author}) => {
+      return (
+        <li className='list-group-item list-group-item-light d-flex justify-content-between' key={id}>
+          <span><strong>Title: {title}</strong></span>
+          <span><strong>Author: {author}</strong></span>
+          <span> <Button variant="danger" type="submit">X</Button></span>
+        </li>
+      )
+    })
+    }
+</FlipMove> : <p className='text-center'>Nothing for the moment</p>
+
+
 
   return (
     <main role="main">
@@ -64,7 +84,9 @@ const handleSubmit = e => {
           <div className="col-md-12">
             <ul className='list-group'>
 
-              <li className='list-group-item list-group-item-light d-flex justify-content-between'>book recorded</li>
+              {
+                displayData
+              }
 
             </ul>
           </div>
@@ -72,7 +94,7 @@ const handleSubmit = e => {
           <div className="d-flex justify-content-center m-3">
 
               <Button variant="danger" type="submit">
-                    Delete
+                    Delete all
               </Button>
 
           </div>
