@@ -30,6 +30,19 @@ const handleSubmit = e => {
   setNewData(initialState)
 }
 
+
+const displayData = libraryData.length > 0 ?
+  libraryData.map(({id, title, author}) => {
+    return (
+      <li className='list-group-item list-group-item-light d-flex justify-content-between' key={id}>
+        <span><strong>Title: {title}</strong></span>
+        <span><strong>Author: {author}</strong></span>
+        <span> <Button variant="danger" type="submit">X</Button></span>
+      </li>
+    )
+  }) : <p className='text-center'>Nothing for the moment</p>
+
+
   return (
     <main role="main">
       <div className="jumbotron container-fluid ">
@@ -64,7 +77,9 @@ const handleSubmit = e => {
           <div className="col-md-12">
             <ul className='list-group'>
 
-              <li className='list-group-item list-group-item-light d-flex justify-content-between'>book recorded</li>
+              {
+                displayData
+              }
 
             </ul>
           </div>
@@ -72,7 +87,7 @@ const handleSubmit = e => {
           <div className="d-flex justify-content-center m-3">
 
               <Button variant="danger" type="submit">
-                    Delete
+                    Delete all
               </Button>
 
           </div>
