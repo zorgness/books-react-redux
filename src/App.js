@@ -1,7 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
-import AddBook from './containers/AddBook';
+import ManageBook from './containers/ManageBook';
 import NavbarComponent from './components/NavbarComponent';
 import Footer from './components/Footer';
 import store from './redux/store';
@@ -15,7 +15,7 @@ function App() {
 
             <NavbarComponent />
 
-            <AddBook />
+            <ManageBook />
 
             <Footer />
 

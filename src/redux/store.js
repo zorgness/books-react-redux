@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import addBooksReducer from './reducers/addBooksReducer';
+import BooksReducer from './reducers/booksReducer';
 
 
 const store = configureStore({
   reducer: {
-    library: addBooksReducer
+    library: BooksReducer
   }
 })
 

@@ -1,11 +1,10 @@
 import {v4 as uuid} from 'uuid';
-import { ADD_BOOKS } from "../constants";
+import { ADD_BOOKS, DELETE_BOOK } from "../constants";
 
 
 const initialState = {
   books: []
 }
-
 const helperAddData = action =>{
   return {
     id: uuid(),
@@ -14,9 +13,22 @@ const helperAddData = action =>{
   }
 }
 
-const addBooksReducer = (state=initialState.books, action) => {
+const removeDataById = (state, id) => {
+  const books = state.filter(book => book.id !== id)
+
+  return books
+
+}
+
+const BooksReducer = (state=initialState.books, action) => {
+
+
 
   const booksAlreadyAdded = localStorage.getItem('booksData');
+
+  console.log(booksAlreadyAdded)
+
+
 
   if (booksAlreadyAdded) {
     state = JSON.parse(booksAlreadyAdded)
@@ -28,10 +40,16 @@ const addBooksReducer = (state=initialState.books, action) => {
         localStorage.setItem('booksData', JSON.stringify(state))
         return state;
 
+    case DELETE_BOOK:
+        removeDataById(state, action.payload)
+
+        localStorage.setItem('booksData', JSON.stringify(state))
+        return state;
+
 
     default:
       return state;
   }
 }
 
-export default addBooksReducer
+export default BooksReducer

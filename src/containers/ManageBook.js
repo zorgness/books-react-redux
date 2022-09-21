@@ -2,12 +2,10 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { connect } from 'react-redux'
-import { addBook } from '../redux/actions/actionAddBook';
+import { addBook, deleteBook  } from '../redux/actions/actionBooks';
 
 
-const AddBook = ({libraryData, addBook}) => {
-
-  console.log(libraryData)
+const ManageBook = ({libraryData, addBook, deleteBook}) => {
 
   const initialState = {
     title: '',
@@ -30,14 +28,13 @@ const handleSubmit = e => {
   setNewData(initialState)
 }
 
-
 const displayData = libraryData.length > 0 ?
   libraryData.map(({id, title, author}) => {
     return (
       <li className='list-group-item list-group-item-light d-flex justify-content-between' key={id}>
         <span><strong>Title: {title}</strong></span>
         <span><strong>Author: {author}</strong></span>
-        <span> <Button variant="danger" type="submit">X</Button></span>
+        <span> <Button variant="danger" type="submit" onClick={() => deleteBook(id)} >X</Button></span>
       </li>
     )
   }) : <p className='text-center'>Nothing for the moment</p>
@@ -106,8 +103,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addBook: param => dispatch(addBook(param))
+    addBook: param => dispatch(addBook(param)),
+    deleteBook: id => dispatch(deleteBook(id))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddBook)
+export default connect(mapStateToProps, mapDispatchToProps)(ManageBook)
