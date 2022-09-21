@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { connect } from 'react-redux'
-import { addBook } from '../redux/actions/actionAddBook';
+import { addBook, deleteBook  } from '../redux/actions/actionBooks';
 import FlipMove from 'react-flip-move';
 
 
-const AddBook = ({libraryData, addBook}) => {
+const ManageBook = ({libraryData, addBook, deleteBook}) => {
 
 
   const initialState = {
@@ -30,8 +30,6 @@ const handleSubmit = e => {
   setNewData(initialState)
 }
 
-
-
 const displayData = libraryData.length > 0 ?
 
 <FlipMove>
@@ -47,7 +45,6 @@ const displayData = libraryData.length > 0 ?
     })
     }
 </FlipMove> : <p className='text-center'>Nothing for the moment</p>
-
 
 
   return (
@@ -113,8 +110,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addBook: param => dispatch(addBook(param))
+    addBook: param => dispatch(addBook(param)),
+    deleteBook: id => dispatch(deleteBook(id))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddBook)
+export default connect(mapStateToProps, mapDispatchToProps)(ManageBook)
