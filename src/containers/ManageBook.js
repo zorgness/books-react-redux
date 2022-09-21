@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { connect } from 'react-redux'
-import { addBook, deleteBook  } from '../redux/actions/actionBooks';
+import { addBook, deleteBook, deleteAllBooks } from '../redux/actions/actionBooks';
 import FlipMove from 'react-flip-move';
 
 
-const ManageBook = ({libraryData, addBook, deleteBook}) => {
+const ManageBook = ({libraryData, addBook, deleteBook, deleteAllBooks}) => {
+
 
 
   const initialState = {
@@ -39,7 +40,7 @@ const displayData = libraryData.length > 0 ?
         <li className='list-group-item list-group-item-light d-flex justify-content-between' key={id}>
           <span><strong>Title: {title}</strong></span>
           <span><strong>Author: {author}</strong></span>
-          <span> <Button variant="danger" type="submit">X</Button></span>
+          <span> <Button variant="danger" type="submit" onClick={() => deleteBook(id)}>X</Button></span>
         </li>
       )
     })
@@ -90,7 +91,7 @@ const displayData = libraryData.length > 0 ?
 
           <div className="d-flex justify-content-center m-3">
 
-              <Button variant="danger" type="submit">
+              <Button variant="danger" type="submit" onClick={() => deleteAllBooks()}>
                     Delete all
               </Button>
 
@@ -111,7 +112,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBook: param => dispatch(addBook(param)),
-    deleteBook: id => dispatch(deleteBook(id))
+    deleteBook: id => dispatch(deleteBook(id)),
+    deleteAllBooks: () => dispatch(deleteAllBooks())
   }
 }
 

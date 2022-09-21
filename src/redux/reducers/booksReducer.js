@@ -1,5 +1,5 @@
 import {v4 as uuid} from 'uuid';
-import { ADD_BOOKS, DELETE_BOOK } from "../constants";
+import { ADD_BOOKS, DELETE_BOOK, DELETE_ALL_BOOKS } from "../constants";
 
 
 const initialState = {
@@ -20,15 +20,11 @@ const removeDataById = (state, id) => {
 
 }
 
+
 const BooksReducer = (state=initialState.books, action) => {
 
 
-
   const booksAlreadyAdded = localStorage.getItem('booksData');
-
-  console.log(booksAlreadyAdded)
-
-
 
   if (booksAlreadyAdded) {
     state = JSON.parse(booksAlreadyAdded)
@@ -41,10 +37,14 @@ const BooksReducer = (state=initialState.books, action) => {
         return state;
 
     case DELETE_BOOK:
-        removeDataById(state, action.payload)
-
+        state = removeDataById(state, action.payload)
         localStorage.setItem('booksData', JSON.stringify(state))
         return state;
+
+    case DELETE_ALL_BOOKS:
+      localStorage.clear()
+      state = initialState
+      return state;
 
 
     default:
