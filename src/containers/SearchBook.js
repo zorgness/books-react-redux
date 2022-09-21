@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { ApiCall } from '../redux/actions/actionBooks'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
+
 
 const SearchBook = ({apiData, apiBook}) => {
 
@@ -31,6 +31,18 @@ const handleSubmit = e => {
   apiBook(subject)
 }
 
+const truncateString = (str, num) => {
+
+  if(str !== undefined) {
+
+   return str.length <= num ? str : str.slice(0, num) + '...'
+
+  } else {
+    return 'No description available'
+  }
+
+}
+
 const displayApiData = apiData.isLoading ? (
 
   <div>Loading...</div>
@@ -40,16 +52,28 @@ const displayApiData = apiData.isLoading ? (
   <p>{apiData.error}</p>
 )
 :
-    apiData.books.items !== undefined && apiData.books.items.map(() => {
+    apiData.books.items !== undefined &&
+    apiData.books.items.map(({id, volumeInfo }) => {
+
+        const { title, authors, description, previewLink } = volumeInfo
+
+        const image = volumeInfo.hasOwnProperty('imageLinks') ?  volumeInfo.imageLinks.thumbnail : ''
+
         return (
 
-        <Card style={{ width: '18rem' }} className="m-2">
-          <Card.Img variant="top" src="" />
+        <Card style={{ width: '18rem', height: '377.59px' }} className="m-2" key={id} >
+
+          {
+              <Card.Img className="card-img-top" variant="top" src={image} style={{ width: '50px', height: '90px' }}/>
+          }
+
           <Card.Body>
-            <Card.Title>title</Card.Title>
-            <Card.Text>author</Card.Text>
-            <Card.Body>description</Card.Body>
-            <Button variant="primary">More info</Button>
+            <Card.Title>{title}</Card.Title>
+            <Card.Text>{authors}</Card.Text>
+
+              <Card.Body>{truncateString(description, 160)}</Card.Body>
+
+            <Card.Link className='btn btn-primary' href={previewLink}>More info</Card.Link>
           </Card.Body>
         </Card>
 
@@ -81,20 +105,13 @@ const displayApiData = apiData.isLoading ? (
       </div>
 
 
-      <Container style={{minHeight:'80vh'}}>
-          <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Results of your research</Accordion.Header>
-              <Accordion.Body>
-                <Container className='d-flex flex-wrap m-3'>
-                  {
-                    displayApiData
-                  }
-                </Container>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-      </ Container>
+
+      <Container className='d-flex flex-wrap justify-content-center align-items-center' style={{minHeight:'80vh'}}>
+        {
+          displayApiData
+        }
+      </Container>
+
 
 
       </main>
