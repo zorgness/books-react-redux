@@ -48,10 +48,10 @@ const displayData = libraryData.length > 0 ?
 
 
   return (
-    <main role="main" style={{minHeight:'100vh'}}>
+    <main role="main" style={{minHeight: '90vh'}}>
       <div className="jumbotron container-fluid ">
         <div className="container text-center">
-          <h1 className='display-4'>MY BOOKS LIST</h1>
+          <h1 className='display-4'>BOOKS</h1>
           <p>Add book to your list</p>
 
           <Form  className="row form-inline justify-content-center" onSubmit={handleSubmit}>
@@ -66,7 +66,7 @@ const displayData = libraryData.length > 0 ?
               <Form.Control type="text" onChange={handleChange} id="author" value={author} placeholder="Author" required/>
             </Form.Group>
 
-            <Form.Group className="col-2 mx-3" >
+            <Form.Group className="col-2" >
               <Button variant="primary" type="submit">
                 Submit
               </Button>
