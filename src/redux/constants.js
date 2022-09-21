@@ -1,3 +1,6 @@
 export const ADD_BOOKS = 'ADD_BOOKS';
 export const DELETE_BOOK = 'DELETE_BOOK';
 export const DELETE_ALL_BOOKS = 'DELETE_ALL_BOOKS';
+export const LOAD_BOOKS = 'LOAD_BOOKS';
+export const LOAD_BOOKS_SUCCESS = 'LOAD_BOOKS_SUCCESS';
+export const LOAD_BOOKS_ERROR = 'LOAD_BOOKS_ERROR';
