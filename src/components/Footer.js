@@ -4,7 +4,6 @@ const Footer = () => {
 
 
   const styles = {
-    position:'absolute',
     left:'0',
     bottom:'0',
     right:'0'
