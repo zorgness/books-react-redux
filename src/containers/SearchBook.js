@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { ApiCall } from '../redux/actions/actionBooks'
+import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 
 
-const SearchBook = ({apiData, apiBook}) => {
 
-  console.log(apiData)
+const SearchBook = ({apiData, apiBook}) => {
 
 const initialStateSearch = {
   subject: ''
@@ -61,21 +61,30 @@ const displayApiData = apiData.isLoading ? (
 
         return (
 
-        <Card style={{ width: '18rem', height: '377.59px' }} className="m-2" key={id} >
+          <Accordion defaultActiveKey="0" className="m-2" style={{minWidth: '375px'}} >
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>{title}</Accordion.Header>
+            <Accordion.Body>
 
-          {
-              <Card.Img className="card-img-top" variant="top" src={image} style={{ width: '50px', height: '90px' }}/>
-          }
+              <Card style={{minWidth: '375px', height: '400px' }} className="m-2" key={id} >
 
-          <Card.Body>
-            <Card.Title>{title}</Card.Title>
-            <Card.Text>{authors}</Card.Text>
+                {
+                    image !== '' && <Card.Img className="card-img-top m-2" variant="top" src={image} style={{ width: '75px', height: '135px' }}/>
+                }
 
-              <Card.Body>{truncateString(description, 160)}</Card.Body>
+                <Card.Body>
+                  <Card.Title>{title}</Card.Title>
+                  <Card.Text>{authors}</Card.Text>
 
-            <Card.Link className='btn btn-primary' href={previewLink}>More info</Card.Link>
-          </Card.Body>
-        </Card>
+                    <Card.Body>{truncateString(description, 160)}</Card.Body>
+
+                  <Card.Link className='btn btn-primary' href={previewLink}>More info</Card.Link>
+                </Card.Body>
+              </Card>
+
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
 
         )
   })
@@ -91,7 +100,7 @@ const displayApiData = apiData.isLoading ? (
           <Form onSubmit={handleSubmit}>
 
             <Form.Group className='mb-3 ' >
-              <Form.Control type="text" onChange={handleChange} id="subject" value={subject} placeholder="Which subjet are you looking for ?" required />
+              <Form.Control type="text" onChange={handleChange} id="subject" value={subject} placeholder="Which subject are you looking for ?" required />
             </Form.Group>
 
             <Form.Group className="" >
