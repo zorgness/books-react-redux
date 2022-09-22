@@ -61,12 +61,12 @@ const displayApiData = apiData.isLoading ? (
 
         return (
 
-          <Accordion defaultActiveKey="0" className="m-2" style={{minWidth: '375px'}} >
+          <Accordion defaultActiveKey="0" key={id} className="m-2" style={{minWidth: '375px'}} >
           <Accordion.Item eventKey="0">
             <Accordion.Header>{title}</Accordion.Header>
             <Accordion.Body>
 
-              <Card style={{minWidth: '375px', height: '400px' }} className="m-2" key={id} >
+              <Card style={{minWidth: '375px', height: '400px' }} className="m-2" key={id}>
 
                 {
                     image !== '' && <Card.Img className="card-img-top m-2" variant="top" src={image} style={{ width: '75px', height: '135px' }}/>
