@@ -1,20 +1,33 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { ApiCall } from '../redux/actions/actionBooks'
+import { ApiCall, addBook } from '../redux/actions/actionBooks'
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
-const SearchBook = ({apiData, apiBook}) => {
+
+const SearchBook = ({apiData, apiBook, addBook}) => {
 
 const initialStateSearch = {
   subject: ''
 
 }
+
+const notify = book => toast.success(`${book} is added to your list`, {
+  position: "top-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  });
 
 const [search, setSearch] = useState(initialStateSearch)
 
@@ -31,6 +44,15 @@ const handleSubmit = e => {
   apiBook(subject)
 }
 
+const handleSave = (title, author) => {
+
+  const bookToSave = { title, author: author[0]}
+
+  addBook(bookToSave)
+  notify(title)
+
+}
+
 const truncateString = (str, num) => {
 
   if(str !== undefined) {
@@ -40,7 +62,6 @@ const truncateString = (str, num) => {
   } else {
     return 'No description available'
   }
-
 }
 
 const displayApiData = apiData.isLoading ? (
@@ -78,7 +99,9 @@ const displayApiData = apiData.isLoading ? (
 
                     <Card.Body>{truncateString(description, 160)}</Card.Body>
 
-                  <Card.Link className='btn btn-primary' href={previewLink}>More info</Card.Link>
+                  <Card.Link className='btn btn-primary mx-3' href={previewLink}>More info</Card.Link>
+                  <Button variant="success" type="submit" onClick={() => handleSave(title, authors)}>Save</Button>
+
                 </Card.Body>
               </Card>
 
@@ -96,6 +119,8 @@ const displayApiData = apiData.isLoading ? (
         <div className="container text-center">
           <h1 className='display-4'>Search</h1>
           <p>Find books by subject on Google API</p>
+
+          <ToastContainer />
 
           <Form onSubmit={handleSubmit}>
 
@@ -135,6 +160,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    addBook: param => dispatch(addBook(param)),
     apiBook: subject => dispatch(ApiCall(subject))
   }
 }
